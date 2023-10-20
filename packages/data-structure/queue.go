@@ -1,43 +1,39 @@
 package datastructure
 
-func Queue(initialValue []int) (enqueue func(element int) bool, dequeue func() bool, getTail func() int, getHead func() int, getQueue func() []int) {
-	queue := initialValue
+type Queue struct{ Values []int }
 
-	enqueue = func(element int) bool {
-		queue = append(queue, element)
+func (q *Queue) Enqueue(element int) bool {
+	q.Values = append(q.Values, element)
 
-		return true
+	return true
+}
+
+func (q *Queue) Dequeue() bool {
+	if len(q.Values) == 0 {
+		return false
 	}
 
-	dequeue = func() bool {
-		if len(queue) == 0 {
-			return false
-		}
+	q.Values = q.Values[1 : len(q.Values)]
 
-		queue = queue[0 : len(queue)-1]
+	return true
+}
 
-		return true
+func (q *Queue) GetTail() int {
+	if len(q.Values) > 0 {
+		return q.Values[0]
+	} else {
+		return -1
 	}
+}
 
-	getTail = func() int {
-		if len(queue) > 0 {
-			return queue[0]
-		} else {
-			return -1
-		}
+func (q *Queue) GetHead() int {
+	if len(q.Values) > 0 {
+		return q.Values[len(q.Values)-1]
+	} else {
+		return -1
 	}
+}
 
-	getHead = func() int {
-		if len(queue) > 0 {
-			return queue[len(queue)-1]
-		} else {
-			return -1
-		}
-	}
-
-	getQueue = func() []int {
-		return queue
-	}
-
-	return
+func (q *Queue) GetQueue() []int {
+	return q.Values
 }
